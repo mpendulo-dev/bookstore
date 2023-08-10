@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import Input from "./components/Input";
+import Books from "./components/Books";
+import { useEffect, useState } from "react";
+import { fetchBooks, createBook } from "../service/api";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [books, setBooks] = useState("");
 
+  useEffect(() => {
+    fetchBooks().then((data) => setBooks(data));
+  }, []);
+
+  //create book
+  const handleCreateBook = async (BookTitle) => {
+    const bookData = { title: BookTitle, genre: "null" };
+    const createdBook = await createBook(bookData);
+    setBooks([...books, createdBook]);
+  };
+
+  // const handleInputData = (data) => {
+  //   setNewBook(data);
+  // };
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container mt-5">
+      <h1 className="text-center">Book Store</h1>
+      <Input onCreateBook={handleCreateBook} />
+      <div className="books mt-4">
+        <Books books={books} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
