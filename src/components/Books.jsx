@@ -7,7 +7,6 @@ const Books = ({ books, onDeleteBook, updateBook }) => {
   const handleTextChange = (e) => {
     // setUpdatedText(e.target.value);
     setUpdatedText({ ...updatedText, text: e.target.value });
-    console.log(updatedText);
   };
   const handleUpdate = () => {
     updateBook(books._id, updatedText);

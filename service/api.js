@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:3001/api"; // Replace with your API URL
+const API_BASE_URL = "http://localhost:3001/api";
 
 export async function fetchBooks() {
   const response = await fetch(`${API_BASE_URL}/book`);
