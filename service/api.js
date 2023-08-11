@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://node-rest-66bq.onrender.com/api"; // Replace with your API URL
+const API_BASE_URL = "http://localhost:3001/api"; // Replace with your API URL
 
 export async function fetchBooks() {
   const response = await fetch(`${API_BASE_URL}/book`);
@@ -13,7 +13,6 @@ export async function createBook(book) {
     },
     body: JSON.stringify(book),
   });
-  console.log("Touch down, create api");
   return response.json();
 }
 
@@ -31,6 +30,9 @@ export async function updateBook(bookId, book) {
 export async function deleteBook(bookId) {
   const response = await fetch(`${API_BASE_URL}/book/${bookId}`, {
     method: "DELETE",
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   });
   return response.json();
 }

@@ -1,4 +1,4 @@
-const Books = ({ books }) => {
+const Books = ({ books, onDeleteBook }) => {
   return (
     <div>
       {books &&
@@ -16,7 +16,11 @@ const Books = ({ books }) => {
                     <button type="button" className="btn btn-secondary">
                       Edit
                     </button>
-                    <button type="button" className="btn btn-danger">
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() => onDeleteBook(book._id)}
+                    >
                       Delete
                     </button>
                   </div>

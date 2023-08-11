@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { createBook } from "../../service/api";
 
-const Input = ({ data, onCreateBook }) => {
+const Input = ({ onCreateBook }) => {
   const [newBook, setNewBook] = useState("");
 
-  console.log(newBook);
   const handleCreateBook = () => {
     if (newBook.trim() !== "") {
       onCreateBook(newBook);

@@ -2,31 +2,37 @@ import "./App.css";
 import Input from "./components/Input";
 import Books from "./components/Books";
 import { useEffect, useState } from "react";
-import { fetchBooks, createBook } from "../service/api";
+import { fetchBooks, createBook, deleteBook } from "../service/api";
 
 function App() {
   const [books, setBooks] = useState("");
+  const [tasksUpdated, setTasksUpdated] = useState(false);
 
   useEffect(() => {
     fetchBooks().then((data) => setBooks(data));
-  }, []);
+  }, [tasksUpdated]);
 
   //create book
-  const handleCreateBook = async (BookTitle) => {
-    const bookData = { title: BookTitle, genre: "null" };
+  const handleCreateBook = async (bookTitle) => {
+    const bookData = { title: bookTitle, genre: "null" };
     const createdBook = await createBook(bookData);
     setBooks([...books, createdBook]);
   };
+  //update book
 
-  // const handleInputData = (data) => {
-  //   setNewBook(data);
-  // };
+  //delete book
+  const handleDeleteBook = async (bookId) => {
+    const updatedBooks = books.filter((book) => book._id !== bookId);
+    setBooks(updatedBooks);
+    await deleteBook(bookId);
+    setTasksUpdated(!tasksUpdated);
+  };
   return (
     <div className="container mt-5">
       <h1 className="text-center">Book Store</h1>
       <Input onCreateBook={handleCreateBook} />
       <div className="books mt-4">
-        <Books books={books} />
+        <Books books={books} onDeleteBook={handleDeleteBook} />
       </div>
     </div>
   );
