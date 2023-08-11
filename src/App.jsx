@@ -7,6 +7,7 @@ import { fetchBooks, createBook, deleteBook } from "../service/api";
 function App() {
   const [books, setBooks] = useState("");
   const [tasksUpdated, setTasksUpdated] = useState(false);
+  const [editedBook, setEditedBook] = useState({ id: null, title: "" });
 
   useEffect(() => {
     fetchBooks().then((data) => setBooks(data));
@@ -19,6 +20,12 @@ function App() {
     setBooks([...books, createdBook]);
   };
   //update book
+  const handleEditBook = async (bookId, updatedBook) => {
+    const updatedBooks = books.map((book) =>
+      book._id === bookId ? { ...book, text: updatedBook } : book
+    );
+    setBooks(updatedBooks);
+  };
 
   //delete book
   const handleDeleteBook = async (bookId) => {
@@ -32,7 +39,11 @@ function App() {
       <h1 className="text-center">Book Store</h1>
       <Input onCreateBook={handleCreateBook} />
       <div className="books mt-4">
-        <Books books={books} onDeleteBook={handleDeleteBook} />
+        <Books
+          books={books}
+          onDeleteBook={handleDeleteBook}
+          updateBook={handleEditBook}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,21 @@
-const Books = ({ books, onDeleteBook }) => {
+import React, { useState } from "react";
+
+const Books = ({ books, onDeleteBook, updateBook }) => {
+  const [editing, setEditing] = useState(false);
+  const [updatedText, setUpdatedText] = useState(books.title);
+
+  const handleTextChange = (e) => {
+    // setUpdatedText(e.target.value);
+    setUpdatedText({ ...updatedText, text: e.target.value });
+    console.log(updatedText);
+  };
+  const handleUpdate = () => {
+    updateBook(books._id, updatedText);
+    setEditing(false);
+  };
+
   return (
-    <div>
+    <>
       {books &&
         books.map((book, index) => (
           <div key={index}>
@@ -13,7 +28,11 @@ const Books = ({ books, onDeleteBook }) => {
                     role="group"
                     aria-label="Basic example"
                   >
-                    <button type="button" className="btn btn-secondary">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => setEditing(true)}
+                    >
                       Edit
                     </button>
                     <button
@@ -29,7 +48,7 @@ const Books = ({ books, onDeleteBook }) => {
             </div>
           </div>
         ))}
-    </div>
+    </>
   );
 };
 
