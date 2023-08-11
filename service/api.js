@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://localhost:3001/api";
+const api = `${import.meta.env.VITE_APP_SERVER_URL}/api`;
+const API_BASE_URL = api || "http://localhost:3001/api";
 
 export async function fetchBooks() {
   const response = await fetch(`${API_BASE_URL}/book`);
